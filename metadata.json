@@ -1,0 +1,6 @@
+{
+  "name": "Ceylon Iron Club",
+  "description": "Premium fitness and strength training gym in Sri Lanka with expert coaching, modern equipment, and flexible membership plans styled in a clean reddish-brown aesthetic.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
