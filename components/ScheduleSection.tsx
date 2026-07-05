@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useGym } from '@/context/GymContext';
 import { Clock, User, CheckCircle, Flame, Calendar, MapPin, Check } from 'lucide-react';
-import { client } from '@/sanity/lib/client'; // 🌟 சانيةி கிளையண்ட் இம்போர்ட்
 
 export default function ScheduleSection({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
   const { trainers, currentUser, bookClass } = useGym();
@@ -23,6 +22,7 @@ export default function ScheduleSection({ setActiveTab }: { setActiveTab: (tab: 
   useEffect(() => {
     async function fetchSchedules() {
       try {
+        const { client } = await import('@/sanity/lib/client');
         // நீங்கள் கொடுத்த அமைப்பின்படி `trainer` என்பது ரெஃபரன்ஸ் ஆப்ஜெக்ட்டாக உள்ளதால், அதன் `_ref` ஐ எடுக்கிறோம்
         const query = `*[_type == "schedule"] {
           _id,
