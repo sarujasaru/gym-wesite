@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useGym } from "@/context/GymContext";
-import { motion } from "motion/react";
+import { LazyMotion, domAnimation, m } from "motion/react";
 import {
   Dumbbell,
   Flame,
@@ -14,15 +14,7 @@ import {
   Check,
   Star,
 } from "lucide-react";
-import { client } from "@/sanity/lib/client";
-// சானிட்டி இமேஜ் ஆர்எல் பில்டரை உருவாக்குவதற்கான இம்போர்ட்
-import imageUrlBuilder from "@sanity/image-url";
-
-// இமேஜ் பில்டர் செட்டப்
-const builder = imageUrlBuilder(client);
-function urlFor(source: any) {
-  return builder.image(source);
-}
+import { urlFor } from "@/sanity/lib/image";
 
 interface HomeSectionProps {
   setActiveTab: (tab: string) => void;
@@ -64,6 +56,7 @@ export default function HomeSection({ setActiveTab }: HomeSectionProps) {
   useEffect(() => {
     async function fetchDynamicContent() {
       try {
+        const { client } = await import("@/sanity/lib/client");
         // 1. Hero டேட்டாவிற்கான கியூரி
         const heroQuery = `*[_type == "hero"][0]{
           badge,
@@ -133,10 +126,11 @@ export default function HomeSection({ setActiveTab }: HomeSectionProps) {
   }
 
   const bgImageUrl = heroData?.backgroundImage
-    ? urlFor(heroData.backgroundImage).width(1920).quality(80).url()
+    ? urlFor(heroData.backgroundImage).auto("format").width(1600).quality(75).url()
     : "https://picsum.photos/seed/srilankagym/1920/1080";
 
   return (
+    <LazyMotion features={domAnimation} strict>
     <div className="space-y-16 pb-16">
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col items-center justify-center bg-brand-dark overflow-hidden py-16 md:py-24">
@@ -155,7 +149,7 @@ export default function HomeSection({ setActiveTab }: HomeSectionProps) {
         <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/80 via-transparent to-brand-dark/10" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 space-y-8 flex-1 flex flex-col justify-center items-center w-full">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -165,9 +159,9 @@ export default function HomeSection({ setActiveTab }: HomeSectionProps) {
             <span>
               {heroData?.badge || "Sri Lanka's Ultimate Strength Elite Club"}
             </span>
-          </motion.div>
+          </m.div>
 
-          <motion.h1
+          <m.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -177,18 +171,18 @@ export default function HomeSection({ setActiveTab }: HomeSectionProps) {
             <span className="font-serif text-4xl sm:text-5xl md:text-7xl font-normal italic tracking-tight text-brand-primary max-w-5xl mx-auto leading-[1.1] text-shadow-md">
               {heroData?.titleAccent}
             </span>
-          </motion.h1>
+          </m.h1>
 
-          <motion.p
+          <m.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
             className="text-zinc-400 font-sans text-base sm:text-lg md:text-xl max-w-3xl mx-auto font-medium leading-relaxed"
           >
             {heroData?.subtitle}
-          </motion.p>
+          </m.p>
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -208,7 +202,7 @@ export default function HomeSection({ setActiveTab }: HomeSectionProps) {
             >
               {heroData?.secondaryButtonText || "VIEW CLASS SCHEDULE"}
             </button>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* Floating Stats */}
@@ -365,7 +359,7 @@ export default function HomeSection({ setActiveTab }: HomeSectionProps) {
           {sanityServices.map((service) => {
             // சானிட்டி இமேஜ் ஆப்ஜெக்ட்டை கன்வெர்ட் செய்து டைனமிக் URL பெறப்படுகிறது
             const serviceImgUrl = service.coverImage
-              ? urlFor(service.coverImage).width(625).height(400).quality(75).url()
+              ? urlFor(service.coverImage).auto("format").width(625).height(400).quality(75).url()
               : "https://picsum.photos/seed/gym/625/350";
 
             return (
@@ -455,5 +449,6 @@ export default function HomeSection({ setActiveTab }: HomeSectionProps) {
         </div>
       </section>
     </div>
+    </LazyMotion>
   );
 }

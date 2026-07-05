@@ -1,15 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Camera, Layers, Flame, Trophy, Quote } from 'lucide-react';
-import { client } from '@/sanity/lib/client'; // 🌟 சானிட்டி கிளையண்ட் இம்போர்ட்
-import imageUrlBuilder from '@sanity/image-url'; // 🌟 இமேஜ் URL பில்டர் இம்போர்ட்
-
-// 🌟 சானிட்டி இமேஜ் அசெட்களை URL ஆக மாற்ற உதவும் செட்டப்
-const builder = imageUrlBuilder(client);
-function urlFor(source: any) {
-  return builder.image(source);
-}
+import Image from 'next/image';
+import { Trophy, Quote } from 'lucide-react';
+import { urlFor } from '@/sanity/lib/image';
 
 export default function GallerySection() {
   // 🌟 சானிட்டி கேலரி தரவிற்கான ஸ்டேட்ஸ்
@@ -29,6 +23,7 @@ export default function GallerySection() {
   useEffect(() => {
     async function fetchGallery() {
       try {
+        const { client } = await import('@/sanity/lib/client');
         // நீங்கள் கொடுத்த அமைப்பின்படி `order` அடிப்படையில் வரிசைப்படுத்தி எடுக்கிறது
         const query = `*[_type == "gallery"] | order(order asc) {
           _id,
@@ -96,7 +91,7 @@ export default function GallerySection() {
             const isSuccessStory = item.category === 'success-story';
             
             // 🌟 சானிட்டி இமேஜ் ஆப்ஜெக்ட்டை நெக்ஸ்ட் ஜேஎஸ் இல் காட்டுவதற்கு URL ஆக மாற்றுகிறது
-            const imageUrl = item.image ? urlFor(item.image).url() : '';
+            const imageUrl = item.image ? urlFor(item.image).auto('format').width(800).height(600).quality(75).url() : '';
 
             return (
               <div 
@@ -110,10 +105,12 @@ export default function GallerySection() {
                 {/* Image Section */}
                 <div className="relative h-64 sm:h-72 w-full bg-zinc-900 overflow-hidden">
                   {imageUrl && (
-                    <img 
-                      src={imageUrl} 
+                    <Image
+                      src={imageUrl}
                       alt={item.title}
-                      className="object-cover w-full h-full opacity-95 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500"
+                      fill
+                      className="object-cover opacity-95 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   )}
                   <div className="absolute top-4 left-4 bg-brand-primary text-white text-[10px] font-mono font-bold tracking-widest px-2.5 py-1 rounded-md uppercase">
