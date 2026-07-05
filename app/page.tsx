@@ -1,18 +1,20 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar';
 import HomeSection from '@/components/HomeSection';
-import ServicesSection from '@/components/ServicesSection';
-import ScheduleSection from '@/components/ScheduleSection';
-import GallerySection from '@/components/GallerySection';
-import AboutSection from '@/components/AboutSection';
-import ContactSection from '@/components/ContactSection';
-import PortalSection from '@/components/PortalSection';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { useGym } from '@/context/GymContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { Dumbbell, Phone, MapPin, Mail, Clock, ShieldAlert, Heart, Flame } from 'lucide-react';
+
+const ServicesSection = dynamic(() => import('@/components/ServicesSection'));
+const ScheduleSection = dynamic(() => import('@/components/ScheduleSection'));
+const GallerySection  = dynamic(() => import('@/components/GallerySection'));
+const AboutSection    = dynamic(() => import('@/components/AboutSection'));
+const ContactSection  = dynamic(() => import('@/components/ContactSection'));
+const PortalSection   = dynamic(() => import('@/components/PortalSection'));
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<string>('home');

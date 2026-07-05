@@ -2,8 +2,12 @@
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  compress: true,
   typescript: {
     ignoreBuildErrors: false,
+  },
+  experimental: {
+    optimizePackageImports: ['lucide-react', '@sanity/icons', 'motion'],
   },
   images: {
     remotePatterns: [
