@@ -9,6 +9,7 @@ import GallerySection from '@/components/GallerySection';
 import AboutSection from '@/components/AboutSection';
 import ContactSection from '@/components/ContactSection';
 import PortalSection from '@/components/PortalSection';
+import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { useGym } from '@/context/GymContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { Dumbbell, Phone, MapPin, Mail, Clock, ShieldAlert, Heart, Flame } from 'lucide-react';
@@ -62,6 +63,8 @@ export default function Page() {
           </motion.div>
         </AnimatePresence>
       </main>
+
+      <ScrollToTopButton />
 
       {/* Footer in Deep Brand Dark Espresso Theme */}
       <footer className="bg-brand-dark border-t border-brand-primary/20 text-brand-cream py-16" id="app-footer">
