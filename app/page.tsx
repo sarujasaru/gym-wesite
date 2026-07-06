@@ -6,15 +6,24 @@ import Navbar from '@/components/Navbar';
 import HomeSection from '@/components/HomeSection';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { useGym } from '@/context/GymContext';
-import { motion, AnimatePresence } from 'motion/react';
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'motion/react';
 import { Dumbbell, Phone, MapPin, Mail, Clock, ShieldAlert, Heart, Flame } from 'lucide-react';
 
+<<<<<<< HEAD
 const ServicesSection  = dynamic(() => import('@/components/ServicesSection'));
 const ScheduleSection  = dynamic(() => import('@/components/ScheduleSection'));
 const GallerySection   = dynamic(() => import('@/components/GallerySection'));
 const AboutSection     = dynamic(() => import('@/components/AboutSection'));
 const ContactSection   = dynamic(() => import('@/components/ContactSection'));
 const PortalSection    = dynamic(() => import('@/components/PortalSection'));
+=======
+const ServicesSection = dynamic(() => import('@/components/ServicesSection'), { ssr: false });
+const ScheduleSection = dynamic(() => import('@/components/ScheduleSection'), { ssr: false });
+const GallerySection = dynamic(() => import('@/components/GallerySection'), { ssr: false });
+const AboutSection = dynamic(() => import('@/components/AboutSection'), { ssr: false });
+const ContactSection = dynamic(() => import('@/components/ContactSection'), { ssr: false });
+const PortalSection = dynamic(() => import('@/components/PortalSection'), { ssr: false });
+>>>>>>> 662579b5db4bb49fb548181f55ca7ef22445418b
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<string>('home');
@@ -47,23 +56,25 @@ export default function Page() {
 
       {/* Main Dynamic View Section with animations */}
       <main className="flex-grow bg-brand-dark" id="main-content">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.35, ease: 'easeInOut' }}
-          >
-            {activeTab === 'home' && <HomeSection setActiveTab={setActiveTab} />}
-            {activeTab === 'services' && <ServicesSection setActiveTab={setActiveTab} />}
-            {activeTab === 'schedule' && <ScheduleSection setActiveTab={setActiveTab} />}
-            {activeTab === 'gallery' && <GallerySection />}
-            {activeTab === 'about' && <AboutSection setActiveTab={setActiveTab} />}
-            {activeTab === 'contact' && <ContactSection />}
-            {activeTab === 'portal' && <PortalSection setActiveTab={setActiveTab} />}
-          </motion.div>
-        </AnimatePresence>
+        <LazyMotion features={domAnimation} strict>
+          <AnimatePresence mode="wait">
+            <m.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.35, ease: 'easeInOut' }}
+            >
+              {activeTab === 'home' && <HomeSection setActiveTab={setActiveTab} />}
+              {activeTab === 'services' && <ServicesSection setActiveTab={setActiveTab} />}
+              {activeTab === 'schedule' && <ScheduleSection setActiveTab={setActiveTab} />}
+              {activeTab === 'gallery' && <GallerySection />}
+              {activeTab === 'about' && <AboutSection setActiveTab={setActiveTab} />}
+              {activeTab === 'contact' && <ContactSection />}
+              {activeTab === 'portal' && <PortalSection setActiveTab={setActiveTab} />}
+            </m.div>
+          </AnimatePresence>
+        </LazyMotion>
       </main>
 
       <ScrollToTopButton />

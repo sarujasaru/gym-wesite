@@ -2,8 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+<<<<<<< HEAD
 import { Camera, Layers, Flame, Trophy, Quote } from 'lucide-react';
 import { client } from '@/sanity/lib/client'; // 🌟 சானிட்டி கிளையண்ட் இம்போர்ட்
+=======
+import { Trophy, Quote } from 'lucide-react';
+>>>>>>> 662579b5db4bb49fb548181f55ca7ef22445418b
 import { urlFor } from '@/sanity/lib/image';
 
 export default function GallerySection() {
@@ -24,6 +28,7 @@ export default function GallerySection() {
   useEffect(() => {
     async function fetchGallery() {
       try {
+        const { client } = await import('@/sanity/lib/client');
         // நீங்கள் கொடுத்த அமைப்பின்படி `order` அடிப்படையில் வரிசைப்படுத்தி எடுக்கிறது
         const query = `*[_type == "gallery"] | order(order asc) {
           _id,
@@ -91,7 +96,7 @@ export default function GallerySection() {
             const isSuccessStory = item.category === 'success-story';
             
             // 🌟 சானிட்டி இமேஜ் ஆப்ஜெக்ட்டை நெக்ஸ்ட் ஜேஎஸ் இல் காட்டுவதற்கு URL ஆக மாற்றுகிறது
-            const imageUrl = item.image ? urlFor(item.image).url() : '';
+            const imageUrl = item.image ? urlFor(item.image).auto('format').width(800).height(600).quality(75).url() : '';
 
             return (
               <div 
@@ -105,12 +110,21 @@ export default function GallerySection() {
                 {/* Image Section */}
                 <div className="relative h-64 sm:h-72 w-full bg-zinc-900 overflow-hidden">
                   {imageUrl && (
+<<<<<<< HEAD
                     <Image 
                       src={imageUrl} 
                       alt={item.title}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover opacity-95 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500"
+=======
+                    <Image
+                      src={imageUrl}
+                      alt={item.title}
+                      fill
+                      className="object-cover opacity-95 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+>>>>>>> 662579b5db4bb49fb548181f55ca7ef22445418b
                     />
                   )}
                   <div className="absolute top-4 left-4 bg-brand-primary text-white text-[10px] font-mono font-bold tracking-widest px-2.5 py-1 rounded-md uppercase">

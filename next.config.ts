@@ -20,6 +20,7 @@ const nextConfig: NextConfig = {
       'motion',
       'framer-motion'   // பிரேமர் மோஷன் பண்டில் அளவைக் குறைக்க சேர்க்கப்பட்டது
     ],
+    optimizePackageImports: ['lucide-react', '@sanity/icons', 'motion', 'framer-motion'],
   },
   images: {
     remotePatterns: [
@@ -42,6 +43,40 @@ const nextConfig: NextConfig = {
   },
   output: 'standalone',
   transpilePackages: ['motion'],
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.optimization.splitChunks = {
+        ...config.optimization.splitChunks,
+        chunks: 'all',
+        cacheGroups: {
+          ...config.optimization.splitChunks?.cacheGroups,
+          sanity: {
+            test: /[\\/]node_modules[\\/](@sanity|sanity|next-sanity)[\\/]/,
+            name: 'sanity-vendor',
+            chunks: 'async',
+            priority: 30,
+            reuseExistingChunk: true,
+          },
+          motion: {
+            test: /[\\/]node_modules[\\/](motion|framer-motion|motion-dom|motion-utils)[\\/]/,
+            name: 'motion-vendor',
+            chunks: 'all',
+            priority: 25,
+            reuseExistingChunk: true,
+          },
+          commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendor',
+            chunks: 'all',
+            priority: 10,
+            reuseExistingChunk: true,
+          },
+        },
+      };
+    }
+
+    return config;
+  },
   turbopack: {},
 };
 

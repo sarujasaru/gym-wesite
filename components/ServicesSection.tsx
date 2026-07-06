@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { useGym } from '@/context/GymContext';
 import { Dumbbell, Flame, Award, Shield, Sparkles, Check } from 'lucide-react';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
@@ -18,6 +17,7 @@ export default function ServicesSection({ setActiveTab }: ServicesSectionProps) 
   useEffect(() => {
     async function fetchServices() {
       try {
+        const { client } = await import('@/sanity/lib/client');
         const query = `*[_type == "service"] | order(order asc) {
           _id,
           title,
@@ -90,7 +90,7 @@ export default function ServicesSection({ setActiveTab }: ServicesSectionProps) 
       <section className="space-y-12">
         {servicesData.map((service, index) => {
           const serviceImgUrl = service.coverImage 
-            ? urlFor(service.coverImage).url() 
+            ? urlFor(service.coverImage).auto('format').width(800).height(600).quality(75).url()
             : 'https://picsum.photos/seed/gym/800/600';
 
           return (
@@ -108,6 +108,12 @@ export default function ServicesSection({ setActiveTab }: ServicesSectionProps) 
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover opacity-90 hover:opacity-100 transition-all duration-500"
+                <Image
+                  src={serviceImgUrl}
+                  alt={service.title}
+                  fill
+                  className="object-cover opacity-90 hover:opacity-100 transition-all duration-500"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
                 <div className="absolute top-6 left-6 bg-brand-primary p-3 rounded-xl text-white shadow-md">
                   {getServiceIcon(service.iconName)}
