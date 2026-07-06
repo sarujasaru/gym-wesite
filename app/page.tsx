@@ -3,12 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar';
-import HomeSection from '@/components/HomeSection';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { useGym } from '@/context/GymContext';
 import { LazyMotion, domAnimation, m, AnimatePresence } from 'motion/react';
 import { Dumbbell, Phone, MapPin, Mail, Clock, ShieldAlert, Heart, Flame } from 'lucide-react';
 
+const HomeSection = dynamic(() => import('@/components/HomeSection'), { ssr: false });
 const ServicesSection = dynamic(() => import('@/components/ServicesSection'), { ssr: false });
 const ScheduleSection = dynamic(() => import('@/components/ScheduleSection'), { ssr: false });
 const GallerySection = dynamic(() => import('@/components/GallerySection'), { ssr: false });

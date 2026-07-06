@@ -59,7 +59,7 @@ const nextConfig: NextConfig = {
           motion: {
             test: /[\\/]node_modules[\\/](motion|framer-motion|motion-dom|motion-utils)[\\/]/,
             name: 'motion-vendor',
-            chunks: 'all',
+            chunks: 'async',
             priority: 25,
             reuseExistingChunk: true,
           },
