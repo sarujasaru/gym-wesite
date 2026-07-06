@@ -1,5 +1,7 @@
+/* ⚡ CRITICAL: Above-the-fold styles - Load first */
 @import "tailwindcss";
 
+/* Your existing theme */
 @theme {
   --font-sans: var(--font-sans), sans-serif;
   --font-display: var(--font-display), sans-serif;
@@ -17,11 +19,36 @@
   --color-brand-border: #e2d9d6;
 }
 
-/* ── DARK THEME OVERRIDES ───────────────────────────────────────
-   Applied when <html class="dark"> is present.
-   html.dark has specificity 0-1-1 which beats :root (0-1-0)
-   so these values cascade correctly over the @theme defaults.
-   ──────────────────────────────────────────────────────────── */
+/* ⚡ CRITICAL: Hero section styles (above-the-fold) */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-brand-dark);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: normal;
+  font-style: italic;
+  color: var(--color-brand-cream);
+}
+
+.hero-accent {
+  color: var(--color-brand-primary);
+}
+
+/* ⚡ CRITICAL: Layout shift prevention */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── REST: Non-critical styles ────────────────────────────────── */
+/* Dark theme overrides */
 html.dark {
   --color-brand-dark: #1a0d0a;
   --color-brand-dark-card: #2d1810;
@@ -32,35 +59,23 @@ html.dark {
   color-scheme: dark;
 }
 
-/* Smooth background/colour transitions when theme changes */
+/* Smooth transitions */
 body {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* ── ZINC TEXT VISIBILITY IN DARK MODE ─────────────────────────
-   Tailwind utilities live in @layer utilities (lower priority),
-   so these rules outside any layer always win.
-   ──────────────────────────────────────────────────────────── */
+/* Dark mode text fixes */
 html.dark .text-zinc-400 { color: #c0bab5; }
 html.dark .text-zinc-500 { color: #a8a29e; }
 html.dark .text-zinc-600 { color: #b0a9a5; }
 html.dark .text-zinc-700 { color: #d6d0cc; }
-
-/* Fix hardcoded white backgrounds in dark mode */
 html.dark .bg-white { background-color: var(--color-brand-dark-card); }
-
-/* Fix hardcoded zinc borders / backgrounds in dark mode */
 html.dark .border-zinc-100 { border-color: var(--color-brand-border); }
 html.dark .bg-zinc-100 { background-color: var(--color-brand-dark-card-lighter); }
 
+/* Utilities */
 @layer utilities {
-  .text-shadow-sm {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-  }
-  .text-shadow-md {
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-  }
-  .text-shadow-lg {
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
-  }
+  .text-shadow-sm { text-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+  .text-shadow-md { text-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+  .text-shadow-lg { text-shadow: 0 4px 12px rgba(0,0,0,0.18); }
 }

@@ -73,16 +73,59 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${playfair.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       {/* Theme init script and early preconnections */}
       <head>
-        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
-        <link rel="preconnect" href="https://picsum.photos" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://picsum.photos" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}`,
-          }}
-        />
-      </head>
+  {/* Preconnect to critical origins */}
+  <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+  <link rel="preconnect" href="https://ceylonironclub.netlify.app" />
+  <link rel="preconnect" href="https://picsum.photos" />
+  
+  {/* Preload LCP image */}
+  <link 
+    rel="preload" 
+    as="image" 
+    href={process.env.NEXT_PUBLIC_LCP_IMAGE || "https://cdn.sanity.io/images/your-project/your-image.jpg"} 
+    fetchPriority="high"
+  />
+
+  <style dangerouslySetInnerHTML={{
+  __html: `
+    /* Critical above-the-fold styles */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: normal;
+      font-style: italic;
+    }
+    .hero-accent {
+      color: var(--color-brand-primary);
+    }
+    /* Prevent layout shift */
+    img, video, iframe {
+      max-width: 100%;
+      height: auto;
+    }
+  `
+}} />
+
+  <link
+  rel="preload"
+  href="/_next/static/media/inter-latin.woff2"
+  as="font"
+  type="font/woff2"
+  crossOrigin="anonymous"
+/>
+  
+  {/* Theme script */}
+  <script
+    dangerouslySetInnerHTML={{
+      __html: `try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}`,
+    }}
+  />
+</head>
       <body className="bg-brand-dark text-brand-cream font-sans antialiased selection:bg-brand-primary/20 selection:text-brand-primary border-brand-border" suppressHydrationWarning>
         <GymProvider>
           {children}

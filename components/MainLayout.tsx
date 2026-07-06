@@ -19,13 +19,47 @@ const SectionLoading = () => (
   </div>
 );
 
-const HomeSection = dynamic(() => import('@/components/HomeSection'), { ssr: false, loading: SectionLoading });
-const ServicesSection  = dynamic(() => import('@/components/ServicesSection'), { ssr: false, loading: SectionLoading });
-const ScheduleSection  = dynamic(() => import('@/components/ScheduleSection'), { ssr: false, loading: SectionLoading });
-const GallerySection   = dynamic(() => import('@/components/GallerySection'), { ssr: false, loading: SectionLoading });
-const AboutSection     = dynamic(() => import('@/components/AboutSection'), { ssr: false, loading: SectionLoading });
-const ContactSection   = dynamic(() => import('@/components/ContactSection'), { ssr: false, loading: SectionLoading });
-const PortalSection    = dynamic(() => import('@/components/PortalSection'), { ssr: false, loading: SectionLoading });
+const HomeSection = dynamic(
+  () => import('@/components/HomeSection'), 
+  { 
+    ssr: true, // Keep SSR for SEO
+    loading: () => <div className="min-h-[60vh] animate-pulse bg-brand-dark/50" />
+  }
+);
+
+// Lazy load below-the-fold components with lower priority
+const ServicesSection = dynamic(
+  () => import('@/components/ServicesSection'), 
+  { 
+    ssr: false,
+    loading: () => <div className="min-h-[40vh]" />
+  }
+);
+
+const ScheduleSection = dynamic(
+  () => import('@/components/ScheduleSection'), 
+  { ssr: false, loading: () => <div className="min-h-[40vh]" /> }
+);
+
+// Add more components with ssr: false
+const AboutSection = dynamic(
+  () => import('@/components/AboutSection'), 
+  { ssr: false, loading: () => <div className="min-h-[40vh]" /> }
+);
+const GallerySection = dynamic(
+  () => import('@/components/GallerySection'), 
+  { ssr: false, loading: () => <div className="min-h-[40vh]" /> }
+);
+const ContactSection = dynamic(
+  () => import('@/components/ContactSection'), 
+  { ssr: false, loading: () => <div className="min-h-[40vh]" /> }
+);
+const PortalSection = dynamic(
+  () => import('@/components/PortalSection'), 
+  { ssr: false, loading: () => <div className="min-h-[40vh]" /> }
+);
+
+
 
 interface MainLayoutProps {
   initialHeroData: any;

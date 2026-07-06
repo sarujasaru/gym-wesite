@@ -107,20 +107,20 @@ export default function HomeSection({ setActiveTab, initialHeroData, initialServ
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col items-center justify-center bg-brand-dark overflow-hidden py-16 md:py-24">
         {bgImageUrl && (
-          <div className="absolute inset-0 opacity-15 scale-105 overflow-hidden">
-            <Image
-              src={bgImageUrl}
-              alt="Ceylon Iron Club Hero Background"
-              fill
-              priority={true}
-              loading="eager"
-              fetchPriority="high"
-              quality={85}
-              className="object-cover object-center"
-              sizes="100vw"
-            />
-          </div>
-        )}
+  <div className="absolute inset-0 opacity-15 scale-105 overflow-hidden">
+    <Image
+      src={bgImageUrl}
+      alt="Ceylon Iron Club Hero Background"
+      fill
+      priority={true}
+      fetchPriority="high"
+      loading="eager"
+      quality={75}
+      className="object-cover object-center"
+      sizes="100vw"
+    />
+  </div>
+)}
         <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/60 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/80 via-transparent to-brand-dark/10" />
 

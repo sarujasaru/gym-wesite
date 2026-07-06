@@ -27,6 +27,8 @@ async function getHeroData() {
   }
 }
 
+
+
 // 🌟 Fetch initial services to render the disciplines section immediately
 async function getInitialServices() {
   try {
@@ -59,3 +61,4 @@ export default async function Page() {
     />
   );
 }
+
