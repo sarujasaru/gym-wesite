@@ -77,38 +77,30 @@ const GymContext = createContext<GymContextType | undefined>(undefined);
 
 export function GymProvider({ children }: { children: React.ReactNode }) {
   // Authentication states
-  const [currentUser, setCurrentUserState] = useState<UserSession | null>(null);
+  const [currentUser, setCurrentUserState] = useState<UserSession | null>(() => {
+    if (typeof window === 'undefined') return null;
+    return getFromStorage<UserSession | null>('gym_current_user', null);
+  });
 
-  // Core Data Lists
-  const [services, setServices] = useState<Service[]>([]);
-  const [trainers, setTrainers] = useState<Trainer[]>([]);
-  const [plans, setPlans] = useState<MembershipPlan[]>([]);
-  const [schedules, setSchedules] = useState<Schedule[]>([]);
-  const [bookings, setBookings] = useState<Booking[]>([]);
-  const [gallery, setGallery] = useState<GalleryItem[]>([]);
-  const [promotions, setPromotions] = useState<Promotion[]>([]);
-  const [members, setMembers] = useState<Member[]>([]);
-  const [payments, setPayments] = useState<Payment[]>([]);
-
-  // On mount, load from Storage or write defaults
-  useEffect(() => {
-    setTimeout(() => {
-      setServices(getFromStorage<Service[]>('gym_services', DEFAULT_SERVICES));
-      setTrainers(getFromStorage<Trainer[]>('gym_trainers', DEFAULT_TRAINERS));
-      setPlans(getFromStorage<MembershipPlan[]>('gym_plans', DEFAULT_PLANS));
-      setSchedules(getFromStorage<Schedule[]>('gym_schedules', DEFAULT_SCHEDULES));
-      setBookings(getFromStorage<Booking[]>('gym_bookings', DEFAULT_BOOKINGS));
-      setGallery(getFromStorage<GalleryItem[]>('gym_gallery', DEFAULT_GALLERY));
-      setPromotions(getFromStorage<Promotion[]>('gym_promotions', DEFAULT_PROMOTIONS));
-      setMembers(getFromStorage<Member[]>('gym_members', DEFAULT_MEMBERS));
-      setPayments(getFromStorage<Payment[]>('gym_payments', DEFAULT_PAYMENTS));
-      
-      const savedUser = getFromStorage<UserSession | null>('gym_current_user', null);
-      if (savedUser) {
-        setCurrentUserState(savedUser);
-      }
-    }, 0);
-  }, []);
+  // Core Data Lists — lazy initializers read localStorage once on mount, zero extra renders
+  const [services, setServices]     = useState<Service[]>(() =>
+    typeof window === 'undefined' ? DEFAULT_SERVICES : getFromStorage<Service[]>('gym_services', DEFAULT_SERVICES));
+  const [trainers, setTrainers]     = useState<Trainer[]>(() =>
+    typeof window === 'undefined' ? DEFAULT_TRAINERS : getFromStorage<Trainer[]>('gym_trainers', DEFAULT_TRAINERS));
+  const [plans, setPlans]           = useState<MembershipPlan[]>(() =>
+    typeof window === 'undefined' ? DEFAULT_PLANS : getFromStorage<MembershipPlan[]>('gym_plans', DEFAULT_PLANS));
+  const [schedules, setSchedules]   = useState<Schedule[]>(() =>
+    typeof window === 'undefined' ? DEFAULT_SCHEDULES : getFromStorage<Schedule[]>('gym_schedules', DEFAULT_SCHEDULES));
+  const [bookings, setBookings]     = useState<Booking[]>(() =>
+    typeof window === 'undefined' ? DEFAULT_BOOKINGS : getFromStorage<Booking[]>('gym_bookings', DEFAULT_BOOKINGS));
+  const [gallery, setGallery]       = useState<GalleryItem[]>(() =>
+    typeof window === 'undefined' ? DEFAULT_GALLERY : getFromStorage<GalleryItem[]>('gym_gallery', DEFAULT_GALLERY));
+  const [promotions, setPromotions] = useState<Promotion[]>(() =>
+    typeof window === 'undefined' ? DEFAULT_PROMOTIONS : getFromStorage<Promotion[]>('gym_promotions', DEFAULT_PROMOTIONS));
+  const [members, setMembers]       = useState<Member[]>(() =>
+    typeof window === 'undefined' ? DEFAULT_MEMBERS : getFromStorage<Member[]>('gym_members', DEFAULT_MEMBERS));
+  const [payments, setPayments]     = useState<Payment[]>(() =>
+    typeof window === 'undefined' ? DEFAULT_PAYMENTS : getFromStorage<Payment[]>('gym_payments', DEFAULT_PAYMENTS));
 
   const setCurrentUser = (user: UserSession | null) => {
     setCurrentUserState(user);

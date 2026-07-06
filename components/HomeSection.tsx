@@ -15,17 +15,12 @@ import {
   Star,
 } from "lucide-react";
 import { client } from "@/sanity/lib/client";
-// சானிட்டி இமேஜ் ஆர்எல் பில்டரை உருவாக்குவதற்கான இம்போர்ட்
-import imageUrlBuilder from "@sanity/image-url";
-
-// இமேஜ் பில்டர் செட்டப்
-const builder = imageUrlBuilder(client);
-function urlFor(source: any) {
-  return builder.image(source);
-}
+import { urlFor } from "@/sanity/lib/image";
 
 interface HomeSectionProps {
   setActiveTab: (tab: string) => void;
+  initialHeroData?: any;
+  initialServices?: any[];
 }
 
 // சானிட்டி Hero JSON டேட்டாவிற்கான Interface
@@ -53,13 +48,12 @@ interface SanityServiceData {
   order: number;
 }
 
-export default function HomeSection({ setActiveTab }: HomeSectionProps) {
+export default function HomeSection({ setActiveTab, initialHeroData, initialServices }: HomeSectionProps) {
   const { promotions } = useGym(); // services இனி சானிட்டியிலிருந்து பெறப்படும்
   const [copiedPromoId, setCopiedPromoId] = useState<string | null>(null);
 
-  const [heroData, setHeroData] = useState<SanityHeroData | null>(null);
-  const [sanityServices, setSanityServices] = useState<SanityServiceData[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [heroData, setHeroData] = useState<SanityHeroData | null>(initialHeroData || null);
+  const [sanityServices, setSanityServices] = useState<SanityServiceData[]>(initialServices || []);
 
   useEffect(() => {
     async function fetchDynamicContent() {
@@ -98,8 +92,6 @@ export default function HomeSection({ setActiveTab }: HomeSectionProps) {
         setSanityServices(servicesRes);
       } catch (error) {
         console.error("Sanity fetching error:", error);
-      } finally {
-        setLoading(false);
       }
     }
     fetchDynamicContent();
@@ -124,41 +116,36 @@ export default function HomeSection({ setActiveTab }: HomeSectionProps) {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen text-center text-brand-cream py-20 font-mono">
-        Loading dynamic content from Sanity...
-      </div>
-    );
-  }
-
   const bgImageUrl = heroData?.backgroundImage
-    ? urlFor(heroData.backgroundImage).width(1920).quality(80).url()
-    : "https://picsum.photos/seed/srilankagym/1920/1080";
+    ? urlFor(heroData.backgroundImage).width(1200).quality(85).url()
+    : null;
 
   return (
     <div className="space-y-16 pb-16">
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col items-center justify-center bg-brand-dark overflow-hidden py-16 md:py-24">
-        <div className="absolute inset-0 opacity-15 scale-105 overflow-hidden">
-          <Image
-            src={bgImageUrl}
-            alt=""
-            fill
-            priority
-            quality={80}
-            className="object-cover object-center"
-            sizes="100vw"
-          />
-        </div>
+        {bgImageUrl && (
+          <div className="absolute inset-0 opacity-15 scale-105 overflow-hidden">
+            <Image
+              src={bgImageUrl}
+              alt="Ceylon Iron Club Hero Background"
+              fill
+              priority
+              fetchPriority="high"
+              quality={85}
+              className="object-cover object-center"
+              sizes="100vw"
+            />
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/60 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/80 via-transparent to-brand-dark/10" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 space-y-8 flex-1 flex flex-col justify-center items-center w-full">
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 1, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             className="inline-flex items-center space-x-2 bg-brand-primary/20 border border-brand-primary/40 px-3.5 py-1.5 rounded-full text-brand-accent text-xs font-mono font-bold tracking-[0.15em] uppercase"
           >
             <Star className="h-3.5 w-3.5 fill-brand-accent" />
@@ -168,30 +155,29 @@ export default function HomeSection({ setActiveTab }: HomeSectionProps) {
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 1, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.5 }}
             className="font-serif text-4xl sm:text-5xl md:text-7xl font-normal italic tracking-tight text-brand-cream max-w-5xl mx-auto leading-[1.1] text-shadow-md"
           >
-            {heroData?.title} <br />
+            {heroData?.title || 'Forge Your'} <br />
             <span className="font-serif text-4xl sm:text-5xl md:text-7xl font-normal italic tracking-tight text-brand-primary max-w-5xl mx-auto leading-[1.1] text-shadow-md">
-              {heroData?.titleAccent}
+              {heroData?.titleAccent || 'Elite Physique'}
             </span>
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.4 }}
             className="text-zinc-400 font-sans text-base sm:text-lg md:text-xl max-w-3xl mx-auto font-medium leading-relaxed"
           >
-            {heroData?.subtitle}
+            {heroData?.subtitle || "Sri Lanka's premier strength & conditioning club. Expert coaching, science-backed programming, and authentic nutrition for every level."}
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 1, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.4 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 pb-12 w-full"
           >
             <button

@@ -7,7 +7,7 @@ import HomeSection from '@/components/HomeSection';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { useGym } from '@/context/GymContext';
 import { motion, AnimatePresence } from 'motion/react';
-import { Dumbbell, Phone, MapPin, Mail, Clock, ShieldAlert, Heart, Flame } from 'lucide-react';
+import { Dumbbell, Phone, MapPin, Mail, Clock, Heart, Flame } from 'lucide-react';
 
 const ServicesSection  = dynamic(() => import('@/components/ServicesSection'));
 const ScheduleSection  = dynamic(() => import('@/components/ScheduleSection'));
@@ -16,7 +16,12 @@ const AboutSection     = dynamic(() => import('@/components/AboutSection'));
 const ContactSection   = dynamic(() => import('@/components/ContactSection'));
 const PortalSection    = dynamic(() => import('@/components/PortalSection'));
 
-export default function Page() {
+interface MainLayoutProps {
+  initialHeroData: any;
+  initialServices: any[];
+}
+
+export default function MainLayout({ initialHeroData, initialServices }: MainLayoutProps) {
   const [activeTab, setActiveTab] = useState<string>('home');
   const { promotions } = useGym();
 
@@ -55,7 +60,13 @@ export default function Page() {
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.35, ease: 'easeInOut' }}
           >
-            {activeTab === 'home' && <HomeSection setActiveTab={setActiveTab} />}
+            {activeTab === 'home' && (
+              <HomeSection 
+                setActiveTab={setActiveTab} 
+                initialHeroData={initialHeroData} 
+                initialServices={initialServices} 
+              />
+            )}
             {activeTab === 'services' && <ServicesSection setActiveTab={setActiveTab} />}
             {activeTab === 'schedule' && <ScheduleSection setActiveTab={setActiveTab} />}
             {activeTab === 'gallery' && <GallerySection />}

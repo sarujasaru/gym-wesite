@@ -2,16 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { useGym } from '@/context/GymContext';
-import { motion } from 'framer-motion'; // 🌟 இம்போர்ட் சரி செய்யப்பட்டுள்ளது
+import Image from 'next/image';
+import { motion } from 'motion/react';
 import { Target, Eye, Trophy, Phone, Briefcase, Award } from 'lucide-react';
 import { client } from '@/sanity/lib/client'; // 🌟 சானிட்டி கிளையண்ட் இம்போர்ட்
-import imageUrlBuilder from '@sanity/image-url'; // 🌟 சானிட்டி இமேஜ் பில்டர் இம்போர்ட்
-
-// சானிட்டி இமேஜ் ஆர்எல் பில்டர் செட்டப்
-const builder = imageUrlBuilder(client);
-function urlFor(source: any) {
-  return builder.image(source);
-}
+import { urlFor } from '@/sanity/lib/image';
 
 interface AboutSectionProps {
   setActiveTab: (tab: string) => void;
@@ -64,10 +59,12 @@ export default function AboutSection({ setActiveTab }: AboutSectionProps) {
       {/* History Grid */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="relative h-96 w-full rounded-2xl overflow-hidden shadow-md">
-          <img 
+          <Image 
             src="https://picsum.photos/seed/history/800/600" 
             alt="Gym Legacy"
-            className="object-cover w-full h-full opacity-90 hover:opacity-100 transition-all duration-500"
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover opacity-90 hover:opacity-100 transition-all duration-500"
           />
           <div className="absolute inset-0 bg-brand-primary/5 rounded-2xl" />
         </div>
@@ -150,10 +147,12 @@ export default function AboutSection({ setActiveTab }: AboutSectionProps) {
                   className="bg-brand-dark-card rounded-2xl overflow-hidden border border-brand-border hover:border-brand-primary/35 shadow-sm flex flex-col justify-between"
                 >
                   <div className="relative h-72 w-full bg-zinc-100 overflow-hidden">
-                    <img 
+                    <Image 
                       src={trainerImgUrl} 
                       alt={trainer.name}
-                      className="object-cover w-full h-full opacity-90 hover:opacity-100 transition-all duration-300"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover opacity-90 hover:opacity-100 transition-all duration-300"
                     />
                     <div className="absolute bottom-4 left-4 bg-brand-primary text-white text-xs font-mono font-bold px-3 py-1.5 rounded-lg shadow-md flex items-center space-x-1">
                       <Briefcase className="h-3 w-3" />

@@ -5,26 +5,35 @@ import { GymProvider } from '@/context/GymContext';
 
 const inter = Inter({
   subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '900'],
   variable: '--font-sans',
   display: 'swap',
+  preload: true,
 });
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
+  weight: ['400', '600', '700'],
   variable: '--font-display',
   display: 'swap',
+  preload: true,
 });
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
   variable: '--font-serif',
   display: 'swap',
+  preload: true,
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
+  weight: ['400', '700'],
   variable: '--font-mono',
   display: 'swap',
+  preload: true,
 });
 
 export const metadata: Metadata = {

@@ -1,15 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Camera, Layers, Flame, Trophy, Quote } from 'lucide-react';
 import { client } from '@/sanity/lib/client'; // 🌟 சானிட்டி கிளையண்ட் இம்போர்ட்
-import imageUrlBuilder from '@sanity/image-url'; // 🌟 இமேஜ் URL பில்டர் இம்போர்ட்
-
-// 🌟 சானிட்டி இமேஜ் அசெட்களை URL ஆக மாற்ற உதவும் செட்டப்
-const builder = imageUrlBuilder(client);
-function urlFor(source: any) {
-  return builder.image(source);
-}
+import { urlFor } from '@/sanity/lib/image';
 
 export default function GallerySection() {
   // 🌟 சானிட்டி கேலரி தரவிற்கான ஸ்டேட்ஸ்
@@ -110,10 +105,12 @@ export default function GallerySection() {
                 {/* Image Section */}
                 <div className="relative h-64 sm:h-72 w-full bg-zinc-900 overflow-hidden">
                   {imageUrl && (
-                    <img 
+                    <Image 
                       src={imageUrl} 
                       alt={item.title}
-                      className="object-cover w-full h-full opacity-95 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500"
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover opacity-95 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500"
                     />
                   )}
                   <div className="absolute top-4 left-4 bg-brand-primary text-white text-[10px] font-mono font-bold tracking-widest px-2.5 py-1 rounded-md uppercase">
