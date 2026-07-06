@@ -20,7 +20,6 @@ const nextConfig: NextConfig = {
       'motion',
       'framer-motion'   // பிரேமர் மோஷன் பண்டில் அளவைக் குறைக்க சேர்க்கப்பட்டது
     ],
-    optimizePackageImports: ['lucide-react', '@sanity/icons', 'motion', 'framer-motion'],
   },
   images: {
     remotePatterns: [

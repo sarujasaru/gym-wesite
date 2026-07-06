@@ -108,12 +108,6 @@ export default function ServicesSection({ setActiveTab }: ServicesSectionProps) 
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover opacity-90 hover:opacity-100 transition-all duration-500"
-                <Image
-                  src={serviceImgUrl}
-                  alt={service.title}
-                  fill
-                  className="object-cover opacity-90 hover:opacity-100 transition-all duration-500"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
                 <div className="absolute top-6 left-6 bg-brand-primary p-3 rounded-xl text-white shadow-md">
                   {getServiceIcon(service.iconName)}

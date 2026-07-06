@@ -1,17 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
-import { useGym } from '@/context/GymContext';
-import Image from 'next/image';
-import { motion } from 'motion/react';
-import { Target, Eye, Trophy, Phone, Briefcase, Award } from 'lucide-react';
-import { client } from '@/sanity/lib/client'; // 🌟 சானிட்டி கிளையண்ட் இம்போர்ட்
-=======
 import Image from 'next/image';
 import { LazyMotion, domAnimation, m } from 'motion/react';
 import { Target, Eye, Trophy, Phone, Briefcase, Award } from 'lucide-react';
->>>>>>> 662579b5db4bb49fb548181f55ca7ef22445418b
 import { urlFor } from '@/sanity/lib/image';
 
 interface AboutSectionProps {
@@ -67,21 +59,12 @@ export default function AboutSection({ setActiveTab }: AboutSectionProps) {
       {/* History Grid */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="relative h-96 w-full rounded-2xl overflow-hidden shadow-md">
-<<<<<<< HEAD
           <Image 
             src="https://picsum.photos/seed/history/800/600" 
             alt="Gym Legacy"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover opacity-90 hover:opacity-100 transition-all duration-500"
-=======
-          <Image
-            src="https://picsum.photos/seed/history/800/600"
-            alt="Gym Legacy"
-            fill
-            className="object-cover opacity-90 hover:opacity-100 transition-all duration-500"
-            sizes="(max-width: 1024px) 100vw, 50vw"
->>>>>>> 662579b5db4bb49fb548181f55ca7ef22445418b
           />
           <div className="absolute inset-0 bg-brand-primary/5 rounded-2xl" />
         </div>
@@ -164,21 +147,12 @@ export default function AboutSection({ setActiveTab }: AboutSectionProps) {
                   className="bg-brand-dark-card rounded-2xl overflow-hidden border border-brand-border hover:border-brand-primary/35 shadow-sm flex flex-col justify-between"
                 >
                   <div className="relative h-72 w-full bg-zinc-100 overflow-hidden">
-<<<<<<< HEAD
                     <Image 
                       src={trainerImgUrl} 
                       alt={trainer.name}
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
                       className="object-cover opacity-90 hover:opacity-100 transition-all duration-300"
-=======
-                    <Image
-                      src={trainerImgUrl}
-                      alt={trainer.name}
-                      fill
-                      className="object-cover opacity-90 hover:opacity-100 transition-all duration-300"
-                      sizes="(max-width: 768px) 100vw, 33vw"
->>>>>>> 662579b5db4bb49fb548181f55ca7ef22445418b
                     />
                     <div className="absolute bottom-4 left-4 bg-brand-primary text-white text-xs font-mono font-bold px-3 py-1.5 rounded-lg shadow-md flex items-center space-x-1">
                       <Briefcase className="h-3 w-3" />

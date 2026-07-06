@@ -9,21 +9,12 @@ import { useGym } from '@/context/GymContext';
 import { LazyMotion, domAnimation, m, AnimatePresence } from 'motion/react';
 import { Dumbbell, Phone, MapPin, Mail, Clock, ShieldAlert, Heart, Flame } from 'lucide-react';
 
-<<<<<<< HEAD
-const ServicesSection  = dynamic(() => import('@/components/ServicesSection'));
-const ScheduleSection  = dynamic(() => import('@/components/ScheduleSection'));
-const GallerySection   = dynamic(() => import('@/components/GallerySection'));
-const AboutSection     = dynamic(() => import('@/components/AboutSection'));
-const ContactSection   = dynamic(() => import('@/components/ContactSection'));
-const PortalSection    = dynamic(() => import('@/components/PortalSection'));
-=======
 const ServicesSection = dynamic(() => import('@/components/ServicesSection'), { ssr: false });
 const ScheduleSection = dynamic(() => import('@/components/ScheduleSection'), { ssr: false });
 const GallerySection = dynamic(() => import('@/components/GallerySection'), { ssr: false });
 const AboutSection = dynamic(() => import('@/components/AboutSection'), { ssr: false });
 const ContactSection = dynamic(() => import('@/components/ContactSection'), { ssr: false });
 const PortalSection = dynamic(() => import('@/components/PortalSection'), { ssr: false });
->>>>>>> 662579b5db4bb49fb548181f55ca7ef22445418b
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<string>('home');

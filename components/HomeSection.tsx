@@ -14,10 +14,6 @@ import {
   Check,
   Star,
 } from "lucide-react";
-<<<<<<< HEAD
-import { client } from "@/sanity/lib/client";
-=======
->>>>>>> 662579b5db4bb49fb548181f55ca7ef22445418b
 import { urlFor } from "@/sanity/lib/image";
 
 interface HomeSectionProps {
@@ -121,13 +117,8 @@ export default function HomeSection({ setActiveTab, initialHeroData, initialServ
   };
 
   const bgImageUrl = heroData?.backgroundImage
-<<<<<<< HEAD
-    ? urlFor(heroData.backgroundImage).width(1200).quality(85).url()
-    : null;
-=======
     ? urlFor(heroData.backgroundImage).auto("format").width(1600).quality(75).url()
     : "https://picsum.photos/seed/srilankagym/1920/1080";
->>>>>>> 662579b5db4bb49fb548181f55ca7ef22445418b
 
   return (
     <LazyMotion features={domAnimation} strict>
@@ -152,8 +143,6 @@ export default function HomeSection({ setActiveTab, initialHeroData, initialServ
         <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/80 via-transparent to-brand-dark/10" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 space-y-8 flex-1 flex flex-col justify-center items-center w-full">
-          <motion.div
-            initial={{ opacity: 1, y: -20 }}
           <m.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -166,13 +155,8 @@ export default function HomeSection({ setActiveTab, initialHeroData, initialServ
             </span>
           </m.div>
 
-<<<<<<< HEAD
-          <motion.h1
-            initial={{ opacity: 1, y: 20 }}
-=======
           <m.h1
             initial={{ opacity: 0, y: 20 }}
->>>>>>> 662579b5db4bb49fb548181f55ca7ef22445418b
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="font-serif text-4xl sm:text-5xl md:text-7xl font-normal italic tracking-tight text-brand-cream max-w-5xl mx-auto leading-[1.1] text-shadow-md"
@@ -183,29 +167,16 @@ export default function HomeSection({ setActiveTab, initialHeroData, initialServ
             </span>
           </m.h1>
 
-<<<<<<< HEAD
-          <motion.p
-            initial={{ opacity: 1 }}
-=======
           <m.p
             initial={{ opacity: 0 }}
->>>>>>> 662579b5db4bb49fb548181f55ca7ef22445418b
             animate={{ opacity: 1 }}
             className="text-zinc-400 font-sans text-base sm:text-lg md:text-xl max-w-3xl mx-auto font-medium leading-relaxed"
           >
-<<<<<<< HEAD
             {heroData?.subtitle || "Sri Lanka's premier strength & conditioning club. Expert coaching, science-backed programming, and authentic nutrition for every level."}
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 1, y: 15 }}
-=======
-            {heroData?.subtitle}
           </m.p>
 
           <m.div
             initial={{ opacity: 0, y: 15 }}
->>>>>>> 662579b5db4bb49fb548181f55ca7ef22445418b
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 pb-12 w-full"
