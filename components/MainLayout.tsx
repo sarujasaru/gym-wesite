@@ -3,18 +3,29 @@
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar';
-import HomeSection from '@/components/HomeSection';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { useGym } from '@/context/GymContext';
-import { motion, AnimatePresence } from 'motion/react';
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'motion/react';
 import { Dumbbell, Phone, MapPin, Mail, Clock, Heart, Flame } from 'lucide-react';
 
-const ServicesSection  = dynamic(() => import('@/components/ServicesSection'));
-const ScheduleSection  = dynamic(() => import('@/components/ScheduleSection'));
-const GallerySection   = dynamic(() => import('@/components/GallerySection'));
-const AboutSection     = dynamic(() => import('@/components/AboutSection'));
-const ContactSection   = dynamic(() => import('@/components/ContactSection'));
-const PortalSection    = dynamic(() => import('@/components/PortalSection'));
+const SectionLoading = () => (
+  <div className="min-h-[60vh] flex flex-col items-center justify-center space-y-4 animate-pulse bg-brand-dark">
+    <div className="bg-brand-primary/20 p-4 rounded-xl text-brand-primary">
+      <Dumbbell className="h-10 w-10 animate-spin" />
+    </div>
+    <span className="text-xs font-mono font-bold tracking-widest text-brand-accent uppercase">
+      LOADING CEYLON IRON EXPERIENCE...
+    </span>
+  </div>
+);
+
+const HomeSection = dynamic(() => import('@/components/HomeSection'), { ssr: false, loading: SectionLoading });
+const ServicesSection  = dynamic(() => import('@/components/ServicesSection'), { ssr: false, loading: SectionLoading });
+const ScheduleSection  = dynamic(() => import('@/components/ScheduleSection'), { ssr: false, loading: SectionLoading });
+const GallerySection   = dynamic(() => import('@/components/GallerySection'), { ssr: false, loading: SectionLoading });
+const AboutSection     = dynamic(() => import('@/components/AboutSection'), { ssr: false, loading: SectionLoading });
+const ContactSection   = dynamic(() => import('@/components/ContactSection'), { ssr: false, loading: SectionLoading });
+const PortalSection    = dynamic(() => import('@/components/PortalSection'), { ssr: false, loading: SectionLoading });
 
 interface MainLayoutProps {
   initialHeroData: any;
@@ -52,29 +63,31 @@ export default function MainLayout({ initialHeroData, initialServices }: MainLay
 
       {/* Main Dynamic View Section with animations */}
       <main className="flex-grow bg-brand-dark" id="main-content">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.35, ease: 'easeInOut' }}
-          >
-            {activeTab === 'home' && (
-              <HomeSection 
-                setActiveTab={setActiveTab} 
-                initialHeroData={initialHeroData} 
-                initialServices={initialServices} 
-              />
-            )}
-            {activeTab === 'services' && <ServicesSection setActiveTab={setActiveTab} />}
-            {activeTab === 'schedule' && <ScheduleSection setActiveTab={setActiveTab} />}
-            {activeTab === 'gallery' && <GallerySection />}
-            {activeTab === 'about' && <AboutSection setActiveTab={setActiveTab} />}
-            {activeTab === 'contact' && <ContactSection />}
-            {activeTab === 'portal' && <PortalSection setActiveTab={setActiveTab} />}
-          </motion.div>
-        </AnimatePresence>
+        <LazyMotion features={domAnimation} strict>
+          <AnimatePresence mode="wait">
+            <m.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.35, ease: 'easeInOut' }}
+            >
+              {activeTab === 'home' && (
+                <HomeSection 
+                  setActiveTab={setActiveTab} 
+                  initialHeroData={initialHeroData} 
+                  initialServices={initialServices} 
+                />
+              )}
+              {activeTab === 'services' && <ServicesSection setActiveTab={setActiveTab} />}
+              {activeTab === 'schedule' && <ScheduleSection setActiveTab={setActiveTab} />}
+              {activeTab === 'gallery' && <GallerySection />}
+              {activeTab === 'about' && <AboutSection setActiveTab={setActiveTab} />}
+              {activeTab === 'contact' && <ContactSection />}
+              {activeTab === 'portal' && <PortalSection setActiveTab={setActiveTab} />}
+            </m.div>
+          </AnimatePresence>
+        </LazyMotion>
       </main>
 
       <ScrollToTopButton />

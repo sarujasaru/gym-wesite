@@ -112,7 +112,8 @@ export default function HomeSection({ setActiveTab, initialHeroData, initialServ
               src={bgImageUrl}
               alt="Ceylon Iron Club Hero Background"
               fill
-              priority
+              priority={true}
+              loading="eager"
               fetchPriority="high"
               quality={85}
               className="object-cover object-center"

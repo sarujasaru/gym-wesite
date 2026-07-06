@@ -71,8 +71,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${playfair.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
-      {/* Theme init script runs before paint to avoid flash of wrong theme */}
+      {/* Theme init script and early preconnections */}
       <head>
+        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
+        <link rel="preconnect" href="https://picsum.photos" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://picsum.photos" />
         <script
           dangerouslySetInnerHTML={{
             __html: `try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}`,
