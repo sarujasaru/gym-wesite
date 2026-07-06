@@ -59,19 +59,19 @@ const nextConfig: NextConfig = {
             priority: 40,
             enforce: true,
           },
-          // Isolates heavy Sanity Studio logic into its own async chunk
+          // Isolates heavy Sanity Studio logic into its own chunks
           sanity: {
             test: /[\\/]node_modules[\\/](@sanity|sanity|next-sanity|@sanity\/client|@sanity\/image-url|@sanity\/vision)[\\/]/,
             name: 'sanity-vendor',
-            chunks: 'async',
+            chunks: 'all',
             priority: 30,
             reuseExistingChunk: true,
           },
-          // Isolates motion/animation library overhead into its own async chunk
+          // Isolates motion/animation library overhead into its own chunks
           motion: {
             test: /[\\/]node_modules[\\/](motion|framer-motion|motion-dom|motion-utils)[\\/]/,
             name: 'motion-vendor',
-            chunks: 'async',
+            chunks: 'all',
             priority: 25,
             reuseExistingChunk: true,
           },
@@ -79,7 +79,7 @@ const nextConfig: NextConfig = {
           lucide: {
             test: /[\\/]node_modules[\\/](lucide-react)[\\/]/,
             name: 'lucide-vendor',
-            chunks: 'async',
+            chunks: 'all',
             priority: 20,
             reuseExistingChunk: true,
           },

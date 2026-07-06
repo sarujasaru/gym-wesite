@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Dumbbell, Flame, Award, Shield, Sparkles, Check } from 'lucide-react';
-import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 
 interface ServicesSectionProps {
