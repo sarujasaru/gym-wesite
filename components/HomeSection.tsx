@@ -95,9 +95,11 @@ export default function HomeSection({ setActiveTab, initialHeroData, initialServ
     fetchDynamicContent();
   }, []);
 
-  const bgImageUrl = heroData?.backgroundImage
-    ? urlFor(heroData.backgroundImage).auto("format").width(1600).quality(75).url()
-    : "https://picsum.photos/seed/srilankagym/1920/1080";
+  const bgImageUrl = React.useMemo(() => {
+    return heroData?.backgroundImage
+      ? urlFor(heroData.backgroundImage).auto("format").width(1600).quality(75).url()
+      : "https://picsum.photos/seed/srilankagym/1920/1080";
+  }, [heroData]);
 
   return (
     <LazyMotion features={domAnimation} strict>

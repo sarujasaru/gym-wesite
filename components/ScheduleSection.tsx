@@ -47,7 +47,9 @@ export default function ScheduleSection({ setActiveTab }: { setActiveTab: (tab: 
   }, []);
 
   // 🌟 சானிட்டியிலிருந்து வந்த தரவை லோக்கல் நாளின் அடிப்படையில் ஃபில்டர் செய்கிறோம்
-  const filteredSchedules = schedulesData.filter(s => s.dayOfWeek === selectedDay);
+  const filteredSchedules = React.useMemo(() => {
+    return schedulesData.filter(s => s.dayOfWeek === selectedDay);
+  }, [schedulesData, selectedDay]);
 
   const handleBookSession = (scheduleId: string) => {
     setErrorMessage(null);

@@ -27,7 +27,9 @@ export default function SpecialOffers({ promotions, setActiveTab }: SpecialOffer
     setTimeout(() => setCopiedPromoId(null), 2000);
   };
 
-  const activePromos = promotions.filter((p) => p.active === true);
+  const activePromos = React.useMemo(() => {
+    return promotions.filter((p) => p.active === true);
+  }, [promotions]);
 
   if (activePromos.length === 0) return null;
 

@@ -44,9 +44,11 @@ export default function GallerySection() {
     fetchGallery();
   }, []);
 
-  const filteredGallery = selectedCategory === 'all'
-    ? galleryData
-    : galleryData.filter(item => item.category === selectedCategory);
+  const filteredGallery = React.useMemo(() => {
+    return selectedCategory === 'all'
+      ? galleryData
+      : galleryData.filter(item => item.category === selectedCategory);
+  }, [galleryData, selectedCategory]);
 
   return (
     <div className="space-y-12 py-8 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

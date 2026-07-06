@@ -8,13 +8,24 @@ import { useGym } from '@/context/GymContext';
 import { LazyMotion, domAnimation, m, AnimatePresence } from 'motion/react';
 import { Dumbbell, Phone, MapPin, Mail, Clock, ShieldAlert, Heart, Flame } from 'lucide-react';
 
-const HomeSection = dynamic(() => import('@/components/HomeSection'), { ssr: false });
-const ServicesSection = dynamic(() => import('@/components/ServicesSection'), { ssr: false });
-const ScheduleSection = dynamic(() => import('@/components/ScheduleSection'), { ssr: false });
-const GallerySection = dynamic(() => import('@/components/GallerySection'), { ssr: false });
-const AboutSection = dynamic(() => import('@/components/AboutSection'), { ssr: false });
-const ContactSection = dynamic(() => import('@/components/ContactSection'), { ssr: false });
-const PortalSection = dynamic(() => import('@/components/PortalSection'), { ssr: false });
+const SectionLoading = () => (
+  <div className="min-h-[60vh] flex flex-col items-center justify-center space-y-4 animate-pulse bg-brand-dark">
+    <div className="bg-brand-primary/20 p-4 rounded-xl text-brand-primary">
+      <Dumbbell className="h-10 w-10 animate-spin" />
+    </div>
+    <span className="text-xs font-mono font-bold tracking-widest text-brand-accent uppercase">
+      LOADING CEYLON IRON EXPERIENCE...
+    </span>
+  </div>
+);
+
+const HomeSection = dynamic(() => import('@/components/HomeSection'), { ssr: false, loading: SectionLoading });
+const ServicesSection = dynamic(() => import('@/components/ServicesSection'), { ssr: false, loading: SectionLoading });
+const ScheduleSection = dynamic(() => import('@/components/ScheduleSection'), { ssr: false, loading: SectionLoading });
+const GallerySection = dynamic(() => import('@/components/GallerySection'), { ssr: false, loading: SectionLoading });
+const AboutSection = dynamic(() => import('@/components/AboutSection'), { ssr: false, loading: SectionLoading });
+const ContactSection = dynamic(() => import('@/components/ContactSection'), { ssr: false, loading: SectionLoading });
+const PortalSection = dynamic(() => import('@/components/PortalSection'), { ssr: false, loading: SectionLoading });
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<string>('home');
