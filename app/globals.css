@@ -1,8 +1,8 @@
 /* ⚡ CRITICAL: Above-the-fold styles - Load first */
 @import "tailwindcss";
 
-@source "../components/**/*.{ts,tsx}";
-@source "../app/**/*.{ts,tsx}";
+
+
 
 /* Your existing theme */
 @theme {
