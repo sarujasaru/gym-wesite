@@ -55,37 +55,20 @@ export default function ScheduleSection({ setActiveTab }: { setActiveTab: (tab: 
     setErrorMessage(null);
     setSuccessBookingId(null);
 
-    if (!currentUser) {
+    const schedule = schedulesData.find(s => s._id === scheduleId);
+    if (schedule) {
+      const trainerObj = trainers.find(t => t._id === schedule.trainerId);
+      const bookingInfo = {
+        className: schedule.className,
+        dayOfWeek: schedule.dayOfWeek,
+        startTime: schedule.startTime,
+        endTime: schedule.endTime,
+        trainerName: trainerObj ? trainerObj.name : ''
+      };
       if (typeof window !== 'undefined') {
-        window.localStorage.setItem('pending_booking_schedule_id', scheduleId);
+        window.localStorage.setItem('pending_booking_schedule_info', JSON.stringify(bookingInfo));
       }
       setShowLoginPrompt(scheduleId);
-      return;
-    }
-
-    if (currentUser.role === 'admin') {
-      setErrorMessage('Administrators are not permitted to enroll in fitness classes.');
-      return;
-    }
-
-    const dateStr = new Date().toISOString().split('T')[0];
-    
-    // GymContext இல் உள்ள bookClass பங்க்ஷனை இயக்குகிறது
-    const result = bookClass(
-      scheduleId,
-      currentUser.name,
-      currentUser.email,
-      dateStr
-    );
-
-    if (result.success) {
-      setSuccessBookingId(scheduleId);
-      setTimeout(() => {
-        setSuccessBookingId(null);
-        setActiveTab('portal');
-      }, 2000);
-    } else {
-      setErrorMessage(result.error || 'Booking failed.');
     }
   };
 
@@ -142,20 +125,20 @@ export default function ScheduleSection({ setActiveTab }: { setActiveTab: (tab: 
         </div>
       )}
 
-      {/* Login Prompt Card */}
+      {/* Contact Booking Prompt Card */}
       {showLoginPrompt && (
         <div className="bg-brand-dark-card border border-brand-primary/30 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in">
           <div className="space-y-1 text-center sm:text-left">
-            <h4 className="font-display font-bold text-brand-cream">Sign-in Required to Book</h4>
+            <h4 className="font-display font-bold text-brand-cream">Inquire / Book This Session</h4>
             <p className="text-zinc-600 text-xs sm:text-sm">
-              Please register or log in as a member to book this session. We will secure your spot!
+              Contact our branch concierge directly to register and reserve your spot in this coaching session!
             </p>
           </div>
           <button
-            onClick={() => setActiveTab('portal')}
-            className="bg-brand-primary hover:bg-brand-primary-hover text-white text-xs font-mono font-bold px-5 py-3 rounded-xl shadow-sm"
+            onClick={() => setActiveTab('contact')}
+            className="bg-brand-primary hover:bg-brand-primary-hover text-white text-xs font-mono font-bold px-5 py-3 rounded-xl shadow-sm cursor-pointer"
           >
-            GO TO LOGIN / REGISTER
+            REQUEST BOOKING VIA CONTACT
           </button>
         </div>
       )}

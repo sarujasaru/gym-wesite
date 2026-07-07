@@ -54,26 +54,6 @@ const nextConfig: NextConfig = {
   
   output: 'standalone',
   transpilePackages: ['motion'],
-  
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      // Setup explicit, optimized Webpack splitChunks to isolate dynamic heavy vendored bundles
-      config.optimization.splitChunks = {
-        ...config.optimization.splitChunks,
-        chunks: 'all',
-        cacheGroups: {
-          ...config.optimization.splitChunks?.cacheGroups,
-          // Framework bundle isolation for caching
-          framework: {
-            test: /[\\/]node_modules[\\/](react|react-dom|next|scheduler)[\\/]/,
-            name: 'framework-vendor',
-            chunks: 'all',
-          },
-        },
-      };
-    }
-    return config;
-  },
 };
 
 export default nextConfig;

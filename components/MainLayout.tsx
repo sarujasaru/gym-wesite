@@ -48,10 +48,6 @@ const ContactSection = dynamic(
   () => import('@/components/ContactSection'), 
   { ssr: false, loading: () => <div className="min-h-[40vh]" /> }
 );
-const PortalSection = dynamic(
-  () => import('@/components/PortalSection'), 
-  { ssr: false, loading: () => <div className="min-h-[40vh]" /> }
-);
 
 
 
@@ -112,7 +108,6 @@ export default function MainLayout({ initialHeroData, initialServices }: MainLay
               {activeTab === 'gallery' && <GallerySection />}
               {activeTab === 'about' && <AboutSection setActiveTab={setActiveTab} />}
               {activeTab === 'contact' && <ContactSection />}
-              {activeTab === 'portal' && <PortalSection setActiveTab={setActiveTab} />}
             </m.div>
           </AnimatePresence>
         </LazyMotion>
@@ -190,18 +185,6 @@ export default function MainLayout({ initialHeroData, initialServices }: MainLay
               RESOURCES
             </h4>
             <div className="flex flex-col space-y-2.5 font-display text-xs font-bold text-zinc-400">
-              <button 
-                onClick={() => setActiveTab('portal')} 
-                className="text-left hover:text-brand-primary transition-colors cursor-pointer"
-              >
-                Client Booking Dashboard
-              </button>
-              <button 
-                onClick={() => setActiveTab('portal')} 
-                className="text-left hover:text-brand-primary transition-colors cursor-pointer"
-              >
-                Administrator Console Login
-              </button>
               <button 
                 onClick={() => setActiveTab('schedule')} 
                 className="text-left hover:text-brand-primary transition-colors cursor-pointer"

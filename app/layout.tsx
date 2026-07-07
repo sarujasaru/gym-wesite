@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Space_Grotesk, JetBrains_Mono, Playfair_Display } from 'next/font/google';
 import './globals.css'; // Global styles
 import { GymProvider } from '@/context/GymContext';
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ['latin'],
@@ -16,7 +17,7 @@ const spaceGrotesk = Space_Grotesk({
   weight: ['400', '600', '700'],
   variable: '--font-display',
   display: 'swap',
-  preload: true,
+  preload: false,
 });
 
 const playfair = Playfair_Display({
@@ -25,7 +26,7 @@ const playfair = Playfair_Display({
   style: ['normal', 'italic'],
   variable: '--font-serif',
   display: 'swap',
-  preload: true,
+  preload: false,
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -33,7 +34,7 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['400', '700'],
   variable: '--font-mono',
   display: 'swap',
-  preload: true,
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -71,62 +72,48 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${playfair.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
-      {/* Theme init script and early preconnections */}
       <head>
-  {/* Preconnect to critical origins */}
-  <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
-  <link rel="preconnect" href="https://ceylonironclub.netlify.app" />
-  <link rel="preconnect" href="https://picsum.photos" />
-  
-  {/* Preload LCP image */}
-  <link 
-    rel="preload" 
-    as="image" 
-    href={process.env.NEXT_PUBLIC_LCP_IMAGE || "https://cdn.sanity.io/images/your-project/your-image.jpg"} 
-    fetchPriority="high"
-  />
+        {/* Preconnect to critical origins */}
+        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
 
-  <style dangerouslySetInnerHTML={{
-  __html: `
-    /* Critical above-the-fold styles */
-    .hero-section {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .hero-title {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: normal;
-      font-style: italic;
-    }
-    .hero-accent {
-      color: var(--color-brand-primary);
-    }
-    /* Prevent layout shift */
-    img, video, iframe {
-      max-width: 100%;
-      height: auto;
-    }
-  `
-}} />
-
-  <link
-  rel="preload"
-  href="/_next/static/media/inter-latin.woff2"
-  as="font"
-  type="font/woff2"
-  crossOrigin="anonymous"
-/>
-  
-  {/* Theme script */}
-  <script
-    dangerouslySetInnerHTML={{
-      __html: `try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}`,
-    }}
-  />
-</head>
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            /* Critical above-the-fold styles */
+            .hero-section {
+              min-height: 100vh;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            .hero-title {
+              font-size: clamp(2.5rem, 6vw, 4.5rem);
+              font-weight: normal;
+              font-style: italic;
+            }
+            .hero-accent {
+              color: var(--color-brand-primary);
+            }
+            /* Prevent layout shift */
+            img, video, iframe {
+              max-width: 100%;
+              height: auto;
+            }
+          `
+        }} />
+      </head>
       <body className="bg-brand-dark text-brand-cream font-sans antialiased selection:bg-brand-primary/20 selection:text-brand-primary border-brand-border" suppressHydrationWarning>
+        <Script
+          id="theme"
+          strategy="beforeInteractive"
+        >
+          {`
+            try {
+              if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+              }
+            } catch (e) {}
+          `}
+        </Script>
         <GymProvider>
           {children}
         </GymProvider>

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useGym } from '@/context/GymContext';
-import { Dumbbell, Menu, X, LogIn, User, ShieldAlert } from 'lucide-react';
+import { Dumbbell, Menu, X, LogIn, User, ShieldAlert, MessageSquare } from 'lucide-react';
 import ThemeToggle from '@/components/ThemeToggle';
 
 interface NavbarProps {
@@ -72,50 +72,14 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
           {/* Right Action buttons */}
           <div className="hidden md:flex items-center space-x-2" id="nav-actions">
             <ThemeToggle />
-            {currentUser ? (
-              <div className="flex items-center space-x-3">
-                <button
-                  id="nav-portal-btn"
-                  onClick={() => handleNavClick('portal')}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-display text-sm font-semibold border transition-all duration-300 ${
-                    activeTab === 'portal'
-                      ? 'bg-brand-primary text-white border-brand-primary'
-                      : 'bg-transparent border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white'
-                  }`}
-                >
-                  {currentUser.role === 'admin' ? (
-                    <>
-                      <ShieldAlert className="h-4 w-4 text-brand-accent" />
-                      <span>Admin Console</span>
-                    </>
-                  ) : (
-                    <>
-                      <User className="h-4 w-4 text-brand-accent" />
-                      <span>My Profile</span>
-                    </>
-                  )}
-                </button>
-                <button
-                  id="logout-btn"
-                  onClick={() => {
-                    logout();
-                    handleNavClick('home');
-                  }}
-                  className="text-xs font-mono font-semibold tracking-wider text-zinc-500 hover:text-brand-primary transition-colors cursor-pointer"
-                >
-                  LOGOUT
-                </button>
-              </div>
-            ) : (
-              <button
-                id="login-btn-header"
-                onClick={() => handleNavClick('portal')}
-                className="flex items-center space-x-2 bg-brand-primary hover:bg-brand-primary-hover  text-white font-display text-sm font-bold tracking-wide px-5 py-2.5 rounded-lg transition-all shadow-md hover:shadow-brand-primary/20 hover:scale-[1.02] duration-300"
-              >
-                <LogIn className="h-4 w-4" />
-                <span>JOIN THE CLUB</span>
-              </button>
-            )}
+            <button
+              id="login-btn-header"
+              onClick={() => handleNavClick('contact')}
+              className="flex items-center space-x-2 bg-brand-primary hover:bg-brand-primary-hover text-white font-display text-sm font-bold tracking-wide px-5 py-2.5 rounded-lg transition-all shadow-md hover:shadow-brand-primary/20 hover:scale-[1.02] duration-300"
+            >
+              <MessageSquare className="h-4 w-4" />
+              <span>CONTACT US</span>
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -151,46 +115,16 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
             </button>
           ))}
           <hr className="border-brand-primary/10 my-3" />
-          {currentUser ? (
-            <div className="space-y-3 px-4 pt-2">
-              <div className="flex items-center space-x-2 text-zinc-700">
-                {currentUser.role === 'admin' ? (
-                  <ShieldAlert className="h-5 w-5 text-brand-accent" />
-                ) : (
-                  <User className="h-5 w-5 text-brand-accent" />
-                )}
-                <span className="font-display font-medium text-sm">{currentUser.name}</span>
-              </div>
-              <button
-                id="mobile-portal-btn"
-                onClick={() => handleNavClick('portal')}
-                className="w-full text-center bg-brand-primary/20 hover:bg-brand-primary text-brand-cream border border-brand-primary/50 py-2.5 rounded-lg font-display text-sm font-semibold transition-all"
-              >
-                {currentUser.role === 'admin' ? 'Admin Console' : 'My Dashboard'}
-              </button>
-              <button
-                id="mobile-logout-btn"
-                onClick={() => {
-                  logout();
-                  handleNavClick('home');
-                }}
-                className="block w-full text-center text-xs font-mono font-semibold tracking-wider text-zinc-500 hover:text-brand-primary py-2"
-              >
-                LOGOUT
-              </button>
-            </div>
-          ) : (
-            <div className="px-4 pt-2">
-              <button
-                id="mobile-login-btn"
-                onClick={() => handleNavClick('portal')}
-                className="w-full flex items-center justify-center space-x-2 bg-brand-primary hover:bg-brand-primary-hover text-brand-cream font-display font-bold text-sm tracking-wide py-3 rounded-lg transition-all"
-              >
-                <LogIn className="h-4 w-4" />
-                <span>JOIN THE CLUB</span>
-              </button>
-            </div>
-          )}
+          <div className="px-4 pt-2">
+            <button
+              id="mobile-login-btn"
+              onClick={() => handleNavClick('contact')}
+              className="w-full flex items-center justify-center space-x-2 bg-brand-primary hover:bg-brand-primary-hover text-brand-cream font-display font-bold text-sm tracking-wide py-3 rounded-lg transition-all"
+            >
+              <MessageSquare className="h-4 w-4" />
+              <span>CONTACT US</span>
+            </button>
+          </div>
         </div>
       )}
     </header>
