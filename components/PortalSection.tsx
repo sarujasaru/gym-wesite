@@ -1,9 +1,68 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { useGym } from '@/context/GymContext';
-import MemberDashboard from './MemberDashboard';
+
 import { LogIn, UserPlus, Info } from 'lucide-react';
+
+const MemberDashboard = dynamic(
+  () => import('./MemberDashboard'),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="py-8 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-pulse">
+        {/* Welcome Banner Skeleton */}
+        <div className="bg-brand-dark-card border border-brand-primary/20 rounded-3xl p-6 md:p-8 h-32 flex items-center justify-between">
+          <div className="space-y-3 w-1/2">
+            <div className="h-4 bg-brand-dark rounded w-1/4" />
+            <div className="h-8 bg-brand-dark rounded w-3/4" />
+          </div>
+          <div className="h-12 bg-brand-dark rounded-xl w-32" />
+        </div>
+
+        {/* Dashboard Grid Skeleton */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left profile and plans */}
+          <div className="space-y-8 lg:col-span-1">
+            <div className="bg-brand-dark-card border border-brand-border rounded-3xl p-6 h-48 space-y-4">
+              <div className="h-6 bg-brand-dark rounded w-1/2" />
+              <div className="space-y-2 pt-2">
+                <div className="h-4 bg-brand-dark rounded w-full" />
+                <div className="h-4 bg-brand-dark rounded w-5/6" />
+                <div className="h-4 bg-brand-dark rounded w-2/3" />
+              </div>
+            </div>
+            <div className="bg-brand-dark-card border border-brand-border rounded-3xl p-6 h-56 space-y-4">
+              <div className="h-6 bg-brand-dark rounded w-1/2" />
+              <div className="h-16 bg-brand-dark rounded-2xl w-full" />
+              <div className="h-10 bg-brand-dark rounded-xl w-full" />
+            </div>
+          </div>
+
+          {/* Right bookings and billing */}
+          <div className="space-y-8 lg:col-span-2">
+            <div className="bg-brand-dark-card border border-brand-border rounded-3xl p-6 md:p-8 h-80 space-y-4">
+              <div className="flex justify-between items-center">
+                <div className="h-6 bg-brand-dark rounded w-1/3" />
+                <div className="h-4 bg-brand-dark rounded w-1/6" />
+              </div>
+              <div className="space-y-3 pt-4">
+                <div className="h-12 bg-brand-dark rounded-2xl w-full" />
+                <div className="h-12 bg-brand-dark rounded-2xl w-full" />
+              </div>
+            </div>
+            <div className="bg-brand-dark-card border border-brand-border rounded-3xl p-6 md:p-8 h-[350px] space-y-4">
+              <div className="h-6 bg-brand-dark rounded w-1/4" />
+              <div className="h-20 bg-brand-dark rounded-2xl w-full" />
+              <div className="h-24 bg-brand-dark rounded-2xl w-full" />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+);
 
 interface PortalSectionProps {
   setActiveTab: (tab: string) => void;

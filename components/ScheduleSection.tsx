@@ -162,8 +162,28 @@ export default function ScheduleSection({ setActiveTab }: { setActiveTab: (tab: 
 
       {/* Schedule Listing Grid */}
       {loading ? (
-        <div className="text-center font-mono text-xs text-brand-cream py-12">
-          Loading Timetable from Sanity...
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="bg-brand-dark-card rounded-2xl border border-brand-border p-6 flex flex-col justify-between animate-pulse h-[320px]">
+              <div className="space-y-5">
+                <div className="flex justify-between items-center">
+                  <div className="h-4 bg-brand-dark rounded w-1/3" />
+                  <div className="h-4 bg-brand-dark rounded w-1/6" />
+                </div>
+                <div className="space-y-2">
+                  <div className="h-6 bg-brand-dark rounded w-3/4" />
+                  <div className="h-4 bg-brand-dark rounded w-1/2" />
+                </div>
+                <div className="space-y-2 pt-2">
+                  <div className="h-3 bg-brand-dark rounded w-full" />
+                  <div className="h-2 bg-brand-dark rounded w-full" />
+                </div>
+              </div>
+              <div className="mt-6 pt-5 border-t border-brand-border">
+                <div className="h-10 bg-brand-dark rounded-xl w-full" />
+              </div>
+            </div>
+          ))}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

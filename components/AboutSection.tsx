@@ -129,9 +129,27 @@ export default function AboutSection({ setActiveTab }: AboutSectionProps) {
         </div>
 
         {loading ? (
-          <div className="text-center font-mono text-xs text-brand-cream py-10">
-            Loading Elite Mentors from Sanity...
-          </div>
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-brand-dark-card border border-brand-border rounded-2xl p-6 space-y-6 animate-pulse h-[450px] flex flex-col justify-between">
+                <div className="space-y-4">
+                  <div className="bg-brand-dark rounded-xl h-56 w-full" />
+                  <div className="space-y-2">
+                    <div className="h-5 bg-brand-dark rounded w-1/2" />
+                    <div className="h-4 bg-brand-dark rounded w-1/4" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-3 bg-brand-dark rounded w-full" />
+                    <div className="h-3 bg-brand-dark rounded w-5/6" />
+                  </div>
+                </div>
+                <div className="flex justify-between items-center pt-4 border-t border-brand-border">
+                  <div className="h-4 bg-brand-dark rounded w-1/3" />
+                  <div className="h-8 bg-brand-dark rounded-lg w-1/4" />
+                </div>
+              </div>
+            ))}
+             </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {trainersData && trainersData.map((trainer) => {

@@ -84,8 +84,19 @@ export default function GallerySection() {
 
       {/* Gallery Grid */}
       {loading ? (
-        <div className="text-center font-mono text-xs text-brand-cream py-12">
-          Loading Visual Showcase from Sanity...
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div key={i} className="bg-brand-dark-card border border-brand-border rounded-3xl p-6 space-y-4 animate-pulse h-[380px] flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="bg-brand-dark rounded-2xl h-48 w-full" />
+                <div className="space-y-2">
+                  <div className="h-5 bg-brand-dark rounded w-2/3" />
+                  <div className="h-3 bg-brand-dark rounded w-full" />
+                  <div className="h-3 bg-brand-dark rounded w-5/6" />
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

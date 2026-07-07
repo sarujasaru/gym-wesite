@@ -19,13 +19,7 @@ const SectionLoading = () => (
   </div>
 );
 
-const HomeSection = dynamic(
-  () => import('@/components/HomeSection'), 
-  { 
-    ssr: true, // Keep SSR for SEO
-    loading: () => <div className="min-h-[60vh] animate-pulse bg-brand-dark/50" />
-  }
-);
+import HomeSection from '@/components/HomeSection';
 
 // Lazy load below-the-fold components with lower priority
 const ServicesSection = dynamic(
@@ -96,7 +90,7 @@ export default function MainLayout({ initialHeroData, initialServices }: MainLay
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/* Main Dynamic View Section with animations */}
-      <main className="flex-grow bg-brand-dark" id="main-content">
+      <main className="flex-grow bg-brand-dark min-h-[80vh] relative" id="main-content">
         <LazyMotion features={domAnimation} strict>
           <AnimatePresence mode="wait">
             <m.div

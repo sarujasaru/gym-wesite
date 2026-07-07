@@ -54,7 +54,29 @@ export default function ServicesSection({ setActiveTab }: ServicesSectionProps) 
   ];
 
   if (loading) {
-    return <div className="min-h-screen text-center text-brand-cream py-20 font-mono">Loading specialties from Sanity...</div>;
+     return (
+      <div className="space-y-16 py-8 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center space-y-3 animate-pulse">
+          <div className="h-4 bg-brand-dark rounded w-1/4 mx-auto" />
+          <div className="h-10 bg-brand-dark rounded w-1/2 mx-auto" />
+          <div className="h-4 bg-brand-dark rounded w-2/3 mx-auto" />
+        </div>
+        <div className="space-y-12">
+          {[1, 2].map((i) => (
+            <div key={i} className="flex flex-col lg:flex-row items-center gap-12 bg-brand-dark-card border border-brand-border rounded-3xl p-6 md:p-10 animate-pulse h-[400px]">
+              <div className="relative h-64 sm:h-80 w-full lg:w-1/2 rounded-2xl bg-brand-dark" />
+              <div className="w-full lg:w-1/2 space-y-6">
+                <div className="h-4 bg-brand-dark rounded w-1/4" />
+                <div className="h-8 bg-brand-dark rounded w-3/4" />
+                <div className="h-4 bg-brand-dark rounded w-full" />
+                <div className="h-4 bg-brand-dark rounded w-5/6" />
+                <div className="h-10 bg-brand-dark rounded-xl w-1/3 pt-4" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   return (
